@@ -10,18 +10,30 @@ def get_program():
             d[inp[0]].update({inp[1]: inp[2:]})
 
 
+def cut_st(st):
+    start = 0
+    finish = len(st) - 1
+    for i in range(len(st)):
+        if st[i] != empty_symbol:
+            start = i
+            break
+    for i in range(len(st) - 1, -1, -1):
+        if st[i] != empty_symbol:
+            finish = i
+            break
+    return st[start:finish + 1]
+
+
 def check_line(st):
     state = 'q1'
     ind = 0
+    st = cut_st(st)
     for _ in range(1000):
+        # print(st)
         if state == 'q0':
-            if sum([int(i) for i in st[:ind]]) == 0:
-                st = st[ind:]
-            return f'{st} результат работы программы'
+            return f"{''.join(cut_st(st))} результат работы программы"
         elif not st[ind] in program[state]:
-            if sum([int(i) for i in st[:ind]]) == 0:
-                st = st[ind:]
-            return f'{st[:-1]} результат работы программы'
+            return f"{''.join(cut_st(st))} результат работы программы"
         new_state, new_value, move = program[state][st[ind]]
         st[ind] = new_value
         ind += all_moves[move]
