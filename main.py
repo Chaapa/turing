@@ -17,7 +17,7 @@ def check_line(st):
         if state == 'q0':
             return f'{st} результат работы программы'
         elif not st[ind] in program[state]:
-            return f'{st[:-1]} результат работы программы'
+            return f'{st[:]} результат работы программы'
         new_state, new_value, move = program[state][st[ind]]
         st[ind] = new_value
         ind += all_moves[move]
