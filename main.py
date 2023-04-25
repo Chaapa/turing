@@ -15,9 +15,13 @@ def check_line(st):
     ind = 0
     for _ in range(1000):
         if state == 'q0':
+            if sum([int(i) for i in st[:ind]]) == 0:
+                st = st[ind:]
             return f'{st} результат работы программы'
         elif not st[ind] in program[state]:
-            return f'{st[:]} результат работы программы'
+            if sum([int(i) for i in st[:ind]]) == 0:
+                st = st[ind:]
+            return f'{st[:-1]} результат работы программы'
         new_state, new_value, move = program[state][st[ind]]
         st[ind] = new_value
         ind += all_moves[move]
